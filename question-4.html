@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Question 4</title>
+</head>
+<body>
+
+<script src="jquery-3.1.1.js"></script>
+<script>
+CommentList.prototype.fetch = function(){
+var promise = $.ajax({
+     url: 'http://itp-api.herokuapp.com/api/comments',
+     type: 'get'
+  }).then(function(api){
+   var fullArray = api.data;
+   var plainArray = fullArray.map(function(comment){
+    return {
+     id: comment.id,
+     body: comment.attributes.body
+     //not sure if this body JSON path is correct?
+    }
+   });
+   return plainArray;
+  });
+   return promise;
+}
+
+  var commentList = new CommentList();
+    commentList.fetch().then(function(finalArray) {
+      console.log(finalArray);
+    });
+
+function CommentList(){
+  //fills later
+}
+
+</script>
+
+</body>
+</html>

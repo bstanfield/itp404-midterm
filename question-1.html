@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Question 1</title>
+</head>
+<body>
+
+<script src="jquery-3.1.1.js"></script>
+<script src="handlebars-v4.0.5.js"></script>
+<script type = template/handlebars id="yehuda-bio">
+{{#each name}}
+  <span class= "fullname">Full name: <strong>{{firstName}} {{lastName}}</strong> </span>
+  <br>
+    {{#if isAdmin}}
+    {{firstName}} is <em>an Admin</em>
+    {{else}}
+    {{firstName}} is <em>not an Admin</em>
+    {{/if}}
+      // wanted to do an #each here, couldn't figure out how to imp
+      <ul>
+      <li>{{openSourceProjects.[0].name}} </li>
+      <li>{{openSourceProjects.[1].name}} </li>
+      <li>{{openSourceProjects.[2].name}} </li>
+      <li>{{openSourceProjects.[3].name}} </li>
+      <li>{{openSourceProjects.[4].name}} </li>
+      </ul>
+{{/each}}
+</script>
+<script>
+var promise = $.ajax({
+    url: 'http://itp-api.herokuapp.com/api/v1/me',
+    type: 'get',
+  });
+promise.then(function(response){
+      var templateSource = $('#yehuda-bio').html();
+      var template = Handlebars.compile(templateSource);
+
+      var html = template({
+        name: response});
+        
+      $('#bio').html(html);
+       }, function(){
+       console.log('ERROR');
+ });
+
+</script>
+
+</body>
+</html>
